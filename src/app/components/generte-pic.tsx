@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getPokemonList, getPokemon, PokemonDetails } from "./lib/pokemonIPA";
+import { getPokemonList, getPokemon, PokemonDetails, PokemonListItem } from "./lib/pokemonIPA";
 import styled from "@emotion/styled";
 import { PokemonCard } from "./ui/pokemonCards";
 import pokemonCardBack from './ui/pik/pikachu_528098.png'
@@ -50,7 +50,8 @@ export function PokemonGame({ gameLimit, gridSize, initialNumPlayers }: PokemonG
             setLoading(true);
             setError(null);
             const numberOfPairs = gameLimit / 2;
-            const basicPokemonList = await getPokemonList(numberOfPairs);
+            const basicPokemonList: PokemonListItem[] = await getPokemonList(numberOfPairs);
+          
             const detailePokemonPromises = basicPokemonList.map(async (e) => {
                 const details: PokemonDetails = await getPokemon(e.name);
                 const picture = details.sprites.other["official-artwork"].front_default || '';
@@ -111,20 +112,16 @@ export function PokemonGame({ gameLimit, gridSize, initialNumPlayers }: PokemonG
         await shuffleCards();
 
     }, [shuffleCards, numPlayers]); // numPlayers er en afhængighed her
-
-    
+        
     useEffect(() => {
         // Opdater numPlayers state baseret på den nye prop
         setNumberPlayers(initialNumPlayers);
-
         // Nulstil spillets tilstand, da vi potentielt starter et "nyt" spil
         // med et nyt antal spillere
         // setCurrentPlayer(1);
         setPlayerScores(Array(initialNumPlayers).fill(0)); // Brug initialNumPlayers her for at sikre korrekt størrelse
-
         // Kald initializeGame for at hente kort osv.
         initializeGame();
-
     }, [initialNumPlayers, initializeGame]); // initialNumPlayers og initializeGame er dependencies
 
     const restart = () => {

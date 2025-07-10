@@ -13,7 +13,7 @@ export interface PokemonListResponse {
   results: PokemonListItem[]; // Nu er 'results' et array af vores nye PokemonListItem
 }
 
- interface PokemonListItem {
+ export interface PokemonListItem {
   name: string;
   url: string; // URL til den individuelle Pokemons detaljer
 }

@@ -1,4 +1,6 @@
 'use client';
+import Image from "next/image";
+
 // Define the interface for the Pokemon data that this component expects as props
 interface PokemonCardProps {
   name: string;    // The name of the Pokémon
@@ -26,14 +28,17 @@ export function PokemonCard({ name, picture }: PokemonCardProps) {
     >
       {/* Display the Pokémon's image */}
       {picture ? (
-        <img
+        <Image
           src={picture}
           alt={name}
+          width={50}
+          height={50}
           className="w-15px h-15px sm:w-17 sm:h-17 object-contain mb-2"
           // Add an onerror fallback for broken images, though not strictly necessary with pokeapi
           onError={(e) => {
             e.currentTarget.src = `https://placehold.co/100x100/CCCCCC/000000?text=No+Image`;
           }}
+          
         />
       ) : (
         // Placeholder if no picture URL is provided

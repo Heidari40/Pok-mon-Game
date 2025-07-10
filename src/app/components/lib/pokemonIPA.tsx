@@ -1,17 +1,22 @@
-// components/lib/pokemonIPA.tsx
-
-// interface PokemonDetails {
-//   sprites: {
-//     other: {
-//       "official-artwork": {
-//         front_default: string;
-//       };
-//     };
-//   };
-// }
-
 const POKEMON_API = "https://pokeapi.co/api/v2/";
-export async function getPokemonList(limit: number): Promise<any[]> {
+
+export interface PokemonListItem {
+  name: string;
+  url: string; // URL til den individuelle Pokemons detaljer
+}
+
+// ---
+// Nyt interface til det fulde svar fra getPokemonList API-kaldet
+// Dette matcher den fulde struktur, som PokeAPI returnerer for lister
+// ---
+export interface PokemonListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokemonListItem[]; // Nu er 'results' et array af vores nye PokemonListItem
+}
+
+export async function getPokemonList(limit: number): Promise<PokemonListItem> {
   try {
     const response = await fetch(`${POKEMON_API}pokemon?limit=${limit}&offset=0`);
     if (!response.ok) {

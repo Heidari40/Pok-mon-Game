@@ -12,16 +12,19 @@ export default function PokemonPlayerPage() {
    const validLimits = [20, 40, 60];
   const gameLimit = validLimits.includes(limitFromUrl) ? limitFromUrl : 20;
 
+  const playersFromUrl = Number(searchparms.get('players') || 1);
+  const initialNumPlayer: 1 | 2 = (playersFromUrl === 1 || playersFromUrl === 2) ? (playersFromUrl as 1 | 2) : 1;
+
   // Calculate the total number of cards for the game
   const totalGameCards = gameLimit * 2;
 
   // Determine the number of columns (gridSize) based on the total number of cards
   let gridSize: number;
-  if (totalGameCards === 40) { // 20 unique Pokemon -> 40 total cards
-    gridSize = 5; // Example: 8 columns (will result in 8x5 grid)
-  } else if (totalGameCards === 80) { // 40 unique Pokemon -> 80 total cards
-    gridSize = 8; // Example: 10 columns (will result in 10x8 grid)
-  } else if (totalGameCards === 120) { // 60 unique Pokemon -> 120 total cards
+  if (totalGameCards === 40) { 
+    gridSize = 5; 
+  } else if (totalGameCards === 80) { 
+    gridSize = 8; 
+  } else if (totalGameCards === 120) { 
     gridSize = 10; 
   } else {
     // Fallback: If an unexpected limit somehow gets through, default to 8 columns
@@ -46,14 +49,14 @@ export default function PokemonPlayerPage() {
 
         </div>
       
-                  <PokemonGame gameLimit={gameLimit} gridSize={gridSize}/>
+                  <PokemonGame gameLimit={gameLimit} gridSize={gridSize} initialNumPlayers={initialNumPlayer}/>
 
           
        <Link href={"/"} className="text-blue-500  p-3 mb-10 border-amber-600 hover:underline text-xl margin-top: auto;">
           Go Back
         </Link>
     
-      <div className="mt-10 mb-5 text-gray-600 dark:text-gray-400 text-sm">
+      <div className=" text-gray-600 dark:text-gray-400 text-sm">
         Data provided by <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">PokeAPI</a>
       </div>
 

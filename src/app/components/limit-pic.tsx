@@ -3,9 +3,13 @@
 import { PokemonGame } from "./generte-pic";
 import { useSearchParams } from "next/navigation";
 
+
+
 function LimitedPokemon(){
   const searchParams = useSearchParams(); // giver adgang itl URL
   const initialLimit = Number(searchParams.get('limit')) || 20; //Hent limit fra url en standard til 36
+  const initialPlayers = Number(searchParams.get('players')) || 1;
+  const numPlayers: 1 | 2 = (initialPlayers === 1 || initialPlayers === 2) ? (initialPlayers as 1 | 2) : 1;
 
     const validLimits = [20, 40, 60];
 
@@ -27,7 +31,7 @@ function LimitedPokemon(){
 return (
      
            
-               <PokemonGame gameLimit = {gameLimit} gridSize = {gridSize}/>
+               <PokemonGame gameLimit = {gameLimit} gridSize = {gridSize} initialNumPlayers={numPlayers}/>
    
 )
 

@@ -7,13 +7,23 @@ import { useState } from "react";
 
 export default function SettingsPage() { // Brug PascalCase for komponentnavne
     const [selectedGameLimit, setSelctedGameLimit] = useState(20);
+    const [numPlayers, setNumPlayers] = useState<1 | 2>(1);
+
+    const handleNumPlyersChange = (player: 1 | 2) => {
+        setNumPlayers(player)
+    }
 
     const handleLimitChange = (limit: number) =>{
         setSelctedGameLimit(limit)
     } 
 
     const handleStartNewGame = () => {
-        console.log(`limit: ${selectedGameLimit}`)
+      // Konstruer URL'en her for at logge den præcist
+        const gameUrl = `/pokemon-games/PokemonPlayerPage?limit=${selectedGameLimit}&players=${numPlayers}`;
+        console.log(`DEBUG: Starter nyt spil med URL: ${gameUrl}`);
+        // Du kan også logge de individuelle værdier for at dobbelttjekke
+        console.log(`DEBUG: Valgt limit: ${selectedGameLimit}, Valgt antal spillere: ${numPlayers}`);
+        // Link komponenten håndterer navigationen, så du behøver ikke router.push her.
     }
     return (
         <Wrapper>
@@ -43,7 +53,6 @@ export default function SettingsPage() { // Brug PascalCase for komponentnavne
                 <SettinsButton
                 onClick={() => handleLimitChange(40)}
                 isActive = {selectedGameLimit === 40} 
-        
                 >
                     Hard
                 </SettinsButton>
@@ -54,13 +63,31 @@ export default function SettingsPage() { // Brug PascalCase for komponentnavne
                 >
                     Max
                 </SettinsButton>
-                
             </Row>
 
             <Row>
+                <Text>
+                       Number of Players
+                </Text>
+            </Row>
+            <Row>
+            <SettinsButton
+             onClick={() => handleNumPlyersChange(1)}
+             isActive={numPlayers === 1}
+            >
+                1
+            </SettinsButton>
+            <SettinsButton
+            onClick={() => handleNumPlyersChange(2)}
+            isActive={numPlayers === 2}
+            >
+                2
+            </SettinsButton>
+            </Row>
+            <Row>
                 <InfoLabel>
                     <Link 
-                    href={`/pokemon-games/PokemonPlayerPage?limit=${selectedGameLimit}`} // Link til roden af din applikation
+                    href={`/pokemon-games/PokemonPlayerPage?limit=${selectedGameLimit}&players=${numPlayers} `} // Link til roden af din applikation
                     className="cursor-pointer"
                     onClick={handleStartNewGame}
                 >
@@ -69,9 +96,6 @@ export default function SettingsPage() { // Brug PascalCase for komponentnavne
                 </Link>
                 </InfoLabel>
                </Row>
-
-            
-           
                <Row>
                   <InfoLabel>
                     <Link

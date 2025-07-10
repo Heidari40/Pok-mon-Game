@@ -11,7 +11,6 @@ export default function PokemonPlayerPage() {
   const limitFromUrl = Number(searchparms.get('limit')) || 20;
    const validLimits = [20, 40, 60];
   const gameLimit = validLimits.includes(limitFromUrl) ? limitFromUrl : 20;
-
   const playersFromUrl = Number(searchparms.get('players') || 1);
   const initialNumPlayer: 1 | 2 = (playersFromUrl === 1 || playersFromUrl === 2) ? (playersFromUrl as 1 | 2) : 1;
 
@@ -43,7 +42,7 @@ export default function PokemonPlayerPage() {
       </h1>
       <Link
         href= "/settings/settingsPage" 
-        className="text-right text-2xl m-7 sm:my-10 border-2 cursor-pointer text-white p-2 rounded-lg hover:bg-green-700 transition-colors">
+        className="text-right text-2xl m-7 sm:my-10 border-2 cursor-pointer text-#808080 p-2 rounded-lg hover:bg-green-700 transition-colors">
           Settings
         </Link>
 

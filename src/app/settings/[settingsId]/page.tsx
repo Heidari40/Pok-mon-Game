@@ -139,14 +139,14 @@ const Title = styled.p`
 font-size: 24px; /* Lidt større titel */
 margin: 0;
 font-weight: bold;
-color: #FFFFFF; /* Gør titlen hvid, da baggrunden er mørk */
+color: #FFFF; /* Gør titlen hvid, da baggrunden er mørk */
 `;
 
 const Text = styled.p`
 font-size: 19px;
 margin: 0;
 font-weight: bold;
-color: #FFFF; 
+color: #808080; 
 `
 
 const InfoLabel = styled.div`

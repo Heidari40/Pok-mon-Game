@@ -1,9 +1,6 @@
 const POKEMON_API = "https://pokeapi.co/api/v2/";
 
-export interface PokemonListItem {
-  name: string;
-  url: string; // URL til den individuelle Pokemons detaljer
-}
+
 
 // ---
 // Nyt interface til det fulde svar fra getPokemonList API-kaldet
@@ -16,13 +13,18 @@ export interface PokemonListResponse {
   results: PokemonListItem[]; // Nu er 'results' et array af vores nye PokemonListItem
 }
 
-export async function getPokemonList(limit: number): Promise<PokemonListItem> {
+ interface PokemonListItem {
+  name: string;
+  url: string; // URL til den individuelle Pokemons detaljer
+}
+
+export async function getPokemonList(limit: number): Promise<PokemonListItem[]> {
   try {
     const response = await fetch(`${POKEMON_API}pokemon?limit=${limit}&offset=0`);
     if (!response.ok) {
       throw new Error("failed to fetch");
     }
-    const data = await response.json();
+    const data: PokemonListResponse = await response.json();
     return data.results;
   } catch (error) {
     console.error("Error fetching Pokemon list:", error);

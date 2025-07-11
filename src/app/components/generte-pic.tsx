@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getPokemonList, getPokemon, PokemonDetails, PokemonListItem } from "./lib/pokemonIPA";
+import { getPokemonList, getPokemon, PokemonDetails, PokemonListItem } from "./lib/pokemonApi";
 import styled from "@emotion/styled";
 import { PokemonCard } from "./ui/pokemonCards";
 import pokemonCardBack from './ui/pik/pikachu_528098.png'

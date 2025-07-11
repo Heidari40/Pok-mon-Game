@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled"; // Correct import for @emotion/styled
-import { getPokemonList, getPokemon, PokemonDetails} from "../lib/pokemonIPA"; // Correct path assuming 'lib' is one level up
+import { getPokemonList, getPokemon, PokemonDetails} from "../lib/pokemonApi"; // Correct path assuming 'lib' is one level up
 import { PokemonCard } from "./pokemonCards";// Correct component name and path
 
 // Interface for the basic Pokémon data returned by getPokemonList
@@ -18,9 +18,7 @@ interface BasicPokemon {
  */
 export function PokemonGrid() {
   // State to store the list of detailed Pokémon data
-  const [pokemonList, setPokemonList] = useState<
-    (PokemonDetails & { picture: string })[]
-  >([]);
+  const [pokemonList, setPokemonList] = useState<(PokemonDetails & { picture: string })[]>([]);
   // State to manage loading status
   const [loading, setLoading] = useState<boolean>(true);
   // State to store any error messages
@@ -31,7 +29,7 @@ export function PokemonGrid() {
     const fetchAllPokemonData = async () => {
       try {
         // 1. Fetch the initial list of Pokémon names and URLs
-        const basicPokemonList: BasicPokemon[] = await getPokemonList();
+        const basicPokemonList: BasicPokemon[] = await getPokemonList(100);
 
         // 2. For each basic Pokémon, fetch its detailed data (including the image URL)
         // Use Promise.all to fetch details for all Pokémon concurrently for efficiency
@@ -40,7 +38,7 @@ export function PokemonGrid() {
           // Extract the official artwork front_default sprite
           const picture = details.sprites.other["official-artwork"].front_default;
           // Return a new object combining name and picture for the PokemonCard
-          return {name: details.name, picture };
+          return { ...details, picture };
         });
 
         // Wait for all detailed Pokémon data fetches to complete
